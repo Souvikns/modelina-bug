@@ -1,0 +1,48 @@
+{
+  "type": "object",
+  "patternProperties": {
+    "^[\\w\\d\\.\\-_]+$": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Reference"
+        },
+        {
+          "$ref": "#/definitions/messageObject"
+        }
+      ]
+    }
+  },
+  "definitions": {
+    "Reference": {
+      "type": "object",
+      "description": "A simple object to allow referencing other components in the specification, internally and externally.",
+      "required": ["$ref"],
+      "properties": {
+        "$ref": {
+          "description": "The reference string.",
+          "$ref": "#/definitions/ReferenceObject"
+        }
+      },
+      "examples": [
+        {
+          "$ref": "#/components/schemas/Pet"
+        }
+      ]
+    },
+    "ReferenceObject": {
+      "type": "string",
+      "format": "uri-reference"
+    },
+    "messageObject": {
+      "type": "object",
+      "description": "Describes a message received on a given channel and operation.",
+      "additionalProperties": false,
+      "properties": {
+        "contentType": {
+          "type": "string",
+          "description": "The content type to use when encoding/decoding a message's payload. The value MUST be a specific media type (e.g. application/json). When omitted, the value MUST be the one specified on the defaultContentType field."
+        }
+      }
+    }
+  }
+}
